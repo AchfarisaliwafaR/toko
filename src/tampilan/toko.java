@@ -4,6 +4,9 @@
  */
 package tampilan;
 
+import java.sql.SQLException;
+import kelas.user;
+
 /**
  *
  * @author TJA Tech
@@ -43,7 +46,9 @@ public class toko extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Chinese are not Allowed to enter");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 3, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("TOKO DA");
 
         jLabel2.setText("user");
 
@@ -62,6 +67,11 @@ public class toko extends javax.swing.JFrame {
         });
 
         jStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "aktif", "no aktif" }));
+        jStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStatusActionPerformed(evt);
+            }
+        });
 
         jTambah.setText("tambah");
         jTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -79,28 +89,22 @@ public class toko extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jUser)
-                            .addComponent(jPassword)
-                            .addComponent(jEmail)
-                            .addComponent(jFullname)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jUser)
+                    .addComponent(jPassword)
+                    .addComponent(jEmail)
+                    .addComponent(jFullname)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(46, 46, 46)))
+                        .addComponent(jStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -110,13 +114,16 @@ public class toko extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(47, 47, 47))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(174, 174, 174))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -136,7 +143,7 @@ public class toko extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTambah)
                     .addComponent(jHapus)
@@ -153,7 +160,25 @@ public class toko extends javax.swing.JFrame {
 
     private void jTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTambahActionPerformed
         // TODO add your handling code here:
+        try {
+            user user = new user();
+            user.setUser_name(jUser.getText());
+            user.setUser_email(jEmail.getText());
+            user.setUser_password(jPassword.getText());
+            user.setUser_fullname(jFullname.getText());
+            if (jStatus.getSelectedItem().equals("Aktif")) {
+                user.setUser_status(1);
+            } else {
+                user.setUser_status(0);
+            }
+            user.tambahUser();
+        } catch (SQLException sQLException) {
+        }
     }//GEN-LAST:event_jTambahActionPerformed
+
+    private void jStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStatusActionPerformed
 
     /**
      * @param args the command line arguments
